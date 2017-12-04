@@ -84,7 +84,7 @@ $ whoami
 {: .bash}
 
 ~~~
-nelle
+mesfind
 ~~~
 {: .output}
 
@@ -105,7 +105,7 @@ More specifically, when we type `whoami` the shell:
 > you should see and use something different,
 > namely, the username associated with the user account on your computer.  This
 > username will be the output from `whoami`.  In
-> what follows, `nelle` should always be replaced by that username.  
+> what follows, `mesfind` should always be replaced by that username.  
 {: .callout}
 
 > ## Unknown commands
@@ -141,7 +141,7 @@ i.e.,
 the directory that the computer assumes we want to run commands in
 unless we explicitly specify something else.
 Here,
-the computer's response is `/Users/nelle`,
+the computer's response is `/Users/mesfind`,
 which is Nelle's **home directory**:
 
 ~~~
@@ -150,16 +150,16 @@ $ pwd
 {: .bash}
 
 ~~~
-/Users/nelle
+/Users/mesfind
 ~~~
 {: .output}
 
 > ## Home Directory Variation
 >
 > The home directory path will look different on different operating systems.
-> On Linux it may look like `/home/nelle`,
-> and on Windows it will be similar to `C:\Documents and Settings\nelle` or
-> `C:\Users\nelle`.  
+> On Linux it may look like `/home/mesfind`,
+> and on Windows it will be similar to `C:\Documents and Settings\mesfind` or
+> `C:\Users\mesfind`.  
 > (Note that it may look slightly different for different versions of Windows.)
 > In future examples, we've used Mac output as the default - Linux and Windows
 > output may differ slightly, but should be generally similar.  
@@ -179,7 +179,7 @@ On Nelle's computer, the filesystem looks like this:
 At the top is the **root directory**
 that holds everything else.
 We refer to it using a slash character `/` on its own;
-this is the leading slash in `/Users/nelle`.
+this is the leading slash in `/Users/mesfind`.
 
 Inside that directory are several other directories:
 `bin` (which is where some built-in programs are stored),
@@ -210,8 +210,8 @@ her colleagues the Mummy and Wolfman.
 
 The Mummy's files are stored in `/Users/imhotep`,
 Wolfman's in `/Users/larry`,
-and Nelle's in `/Users/nelle`.  Because Nelle is the user in our
-examples here, this is why we get `/Users/nelle` as our home directory.  
+and Nelle's in `/Users/mesfind`.  Because Nelle is the user in our
+examples here, this is why we get `/Users/mesfind` as our home directory.  
 Typically, when you open a new command prompt you will be in
 your home directory to start.  
 
@@ -225,7 +225,7 @@ As part of going further with exploring the Bash Shell we'll move to connecting 
 Unlike the commands that we have issued so far `ssh` requires both the command (`ssh`) *and* and an input.  The input in this case is the location of the remote system that we are looking to connect to.  This input is passed to the `ssh` command by placing one or more spaces *after* the `ssh` command and then typing in the address for the remote system either in alpha-numeric format, like most web addresses, or by giving an IP address.  If the name of the remote system was `cedar.computecanada.ca` then the full command would look like the following:
 
 ~~~
-$ ssh cedar.computecanada.ca
+$ ssh username@10.4.17.30
 ~~~
 {: .bash}
 
@@ -250,14 +250,14 @@ $ yes
 This will give you what the system considers to be a warning.  Note that it is not necessarily a bad thing to receive a warning like this, it is just something to take note of.  In this case the warning is telling us that our computer is going to remember the remote system, matching its name/IP to the fingerprint.  As long as these continue to match then in the future we'll be taken directly to the part where we put in our username and password.  If they fail to match in the future then we'll be given a more serious warning and will be unable to connect until we fix the problem.
 
 ~~~
-Warning: Permanently added 'graham.computecanada.ca,199.241.166.2' (ECDSA) to the list of known hosts.
+Warning: Permanently added 'Ntoto@10.4.17.30,199.241.166.2' (ECDSA) to the list of known hosts.
 ~~~
 {: .output}
 
 Beneath the warning it will prompt for a password.
 
 ~~~
-carpentry@graham.computecanada.ca's password:
+mesfind@Ntoto's password:
 ~~~
 {: .output}
 
