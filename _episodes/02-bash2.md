@@ -230,21 +230,21 @@ WHAT IF YOU WANTED THE FILE SOMEWHERE OTHER THAN THE HOME DIRECTORY?
 > Note the colon (`:`) at the end of the command.  This is a very important modifier to include.  If it isn't included then running `scp` will result in a copy of the file that was to be moved being created in the current directory with the name of the remote system.  In the case of the globus.tgz example above it would look like the following:
 > 
 > ~~~
-> [local]$ scp globus.tgz nelle@cedar.computecanada.ca: 
+> [local]$ scp globus.tgz mesfind@10.4.17.30: 
 > [local]$ ls
 > ~~~
 > {: .bash}
 > 
 > ~~~
 > globus.tgz
-> nelle@cedar.computecanada.ca
+> mesfind@10.4.17.30
 > ~~~
 > {: .output}
 > 
 > If this does happen then the extra file can be removed with `rm`.
 > 
 > ~~~
-> [local]$ rm nelle@cedar.computecanada.ca
+> [local]$ rm mesfind@10.4.17.30
 > ~~~
 > {: .bash}
 {: .callout}
