@@ -59,12 +59,12 @@ SSH allows us to connect to UNIX computers remotely, and use them as if they wer
 The general syntax of the connection command follows the format `ssh yourUsername@some.computer.address`
 Let's attempt to connect to the cluster now:
 ```
-ssh yourUsername@graham.computecanada.ca
+ssh yourUsername@10.4.17.30
 ```
 {: .bash}
 
 ```{.output}
-The authenticity of host 'graham.computecanada.ca (199.241.166.2)' can't be established.
+The authenticity of host 'Ntoto (10.4.17.30)' can't be established.
 ECDSA key fingerprint is SHA256:JRj286Pkqh6aeO5zx1QUkS8un5fpcapmezusceSGhok.
 ECDSA key fingerprint is MD5:99:59:db:b1:3f:18:d0:2c:49:4e:c2:74:86:ac:f7:c6.
 Are you sure you want to continue connecting (yes/no)?  # type "yes"!
@@ -80,7 +80,7 @@ This prompt is informative, and lets you grasp certain information at a glance:
 in this case `[yourUsername@computerName workingDirectory]$`.
 
 ```{.output}
-[yourUsername@gra-login1 ~]$
+[yourUsername@Ntoto ~]$
 ```
 
 ## Where are we? 
@@ -96,7 +96,7 @@ hostname
 ```
 {: .bash}
 ```
-gra-login3
+Ntoto
 ```
 {: .output}
 
@@ -109,10 +109,10 @@ It should never be used for doing actual work.
 The real work on a cluster gets done by the "worker" nodes.
 Worker nodes come in many shapes and sizes, but generally are dedicated to doing all of the heavy lifting that needs doing. 
 All interaction with the worker nodes is handled by a specialized piece of software called a scheduler (called SLURM, in this case). 
-We can view all of the worker nodes with the `sinfo` command.
+We can view all of the worker nodes with the `pbsnodes` command.
 
 ```
-sinfo
+pbsnodes
 ```
 {: .bash}
 ```
