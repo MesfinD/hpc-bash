@@ -98,8 +98,7 @@ More specifically, when we type `whoami` the shell:
 
 > ## Username Variation
 >
-> In this lesson, we have used the username `mesfind` (associated
-> with our hypothetical scientist Nelle) in example input and output throughout.  
+> In this lesson, we have used the username `mesfind`  in example input and output throughout.  
 > However, when
 > you type this lesson's commands on your computer,
 > you should see and use something different,
