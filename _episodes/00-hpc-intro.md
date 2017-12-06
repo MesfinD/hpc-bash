@@ -1,5 +1,5 @@
 ---
-title: "High Performance Computing Introduction"
+title: "Introduction to High Performance Computing "
 teaching: 5
 exercises: 0
 questions:
