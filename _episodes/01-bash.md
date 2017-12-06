@@ -98,7 +98,7 @@ More specifically, when we type `whoami` the shell:
 
 > ## Username Variation
 >
-> In this lesson, we have used the username `nelle` (associated
+> In this lesson, we have used the username `mesfind` (associated
 > with our hypothetical scientist Nelle) in example input and output throughout.  
 > However, when
 > you type this lesson's commands on your computer,
@@ -157,7 +157,7 @@ $ pwd
 > ## Home Directory Variation
 >
 > The home directory path will look different on different operating systems.
-> On Linux it may look like `/home/mesfind`,
+> On Linux it may look like `/home/nelle`,
 > and on Windows it will be similar to `C:\Documents and Settings\mesfind` or
 > `C:\Users\mesfind`.  
 > (Note that it may look slightly different for different versions of Windows.)
@@ -188,7 +188,7 @@ Inside that directory are several other directories:
 `tmp` (for temporary files that don't need to be stored long-term),
 and so on.  
 
-We know that our current working directory `/Users/nelle` is stored inside `/Users`
+We know that our current working directory `/Users/mesfind` is stored inside `/Users`
 because `/Users` is the first part of its name.
 Similarly,
 we know that `/Users` is stored inside the root directory `/`
@@ -229,10 +229,10 @@ $ ssh username@10.4.17.30
 ~~~
 {: .bash}
 
-If this was the first time we had ever connected to `cedar.computecanada.ca	` then we will see a note declaring that our computer has no way to know that this is the system that we want to connect to and it will ask us if we are sure about connecting.
+If this was the first time we had ever connected to `10.4.17.30	` then we will see a note declaring that our computer has no way to know that this is the system that we want to connect to and it will ask us if we are sure about connecting.
 
 ~~~
-The authenticity of host 'graham.computecanada.ca (199.241.166.2)' can't be established.
+The authenticity of host 'Ntoto (10.4.17.30)' can't be established.
 ECDSA key fingerprint is SHA256:JRj286Pkqh6aeO5zx1QUkS8un5fpcapmezusceSGhok.
 Are you sure you want to continue connecting (yes/no)?
 ~~~
@@ -250,7 +250,7 @@ $ yes
 This will give you what the system considers to be a warning.  Note that it is not necessarily a bad thing to receive a warning like this, it is just something to take note of.  In this case the warning is telling us that our computer is going to remember the remote system, matching its name/IP to the fingerprint.  As long as these continue to match then in the future we'll be taken directly to the part where we put in our username and password.  If they fail to match in the future then we'll be given a more serious warning and will be unable to connect until we fix the problem.
 
 ~~~
-Warning: Permanently added 'Ntoto@10.4.17.30,199.241.166.2' (ECDSA) to the list of known hosts.
+Warning: Permanently added 'Ntoto@10.4.17.30' (ECDSA) to the list of known hosts.
 ~~~
 {: .output}
 
@@ -269,12 +269,14 @@ Password123
 {: .bash}
 
 ~~~
-Welcome to the ComputeCanada/SHARCNET cluster Graham.
-
-Please refer to the following page:
-https://docs.computecanada.ca/wiki/Graham
-
-Email support@computecanada.ca for assistance.
+Centos release 6.3(Final)
+HPC Sie Ladon centos 6 Multinodo Nis Version 092012
+#######################################################
+# WELCOME TO CLUSTERSIE HPC LADON                     #
+#     CLUSTER ADDIS ABABA                             #
+#     www.clustersie.com                              #
+#######################################################
+Email mesfin.diro@aau.edu.et for assistance.
 
 ***
 
@@ -636,7 +638,7 @@ the `data-shell` directory, then into the `data` directory.  `cd` doesn't print 
 but if we run `pwd` after it, we can see that we are now
 in `/Users/nelle/Desktop/data-shell/data`.
 If we run `ls` without arguments now,
-it lists the contents of `/Users/nelle/Desktop/data-shell/data`,
+it lists the contents of `/Users/mesfind/Desktop/data-shell/data`,
 because that's where we now are:
 
 ~~~
@@ -645,7 +647,7 @@ because that's where we now are:
 {: .bash}
 
 ~~~
-/Users/nelle/Desktop/data-shell/data
+/Users/mesfind/Desktop/data-shell/data
 ~~~
 {: .output}
 
@@ -693,7 +695,7 @@ that looks like this:
 or more succinctly,
 the **parent** of the current directory.
 Sure enough,
-if we run `pwd` after running `cd ..`, we're back in `/Users/nelle/Desktop/data-shell`:
+if we run `pwd` after running `cd ..`, we're back in `/Users/mesfind/Desktop/data-shell`:
 
 ~~~
 [remote]$ pwd
@@ -701,7 +703,7 @@ if we run `pwd` after running `cd ..`, we're back in `/Users/nelle/Desktop/data-
 {: .bash}
 
 ~~~
-/Users/nelle/Desktop/data-shell
+/Users/mesfind/Desktop/data-shell
 ~~~
 {: .output}
 
@@ -723,7 +725,7 @@ Desktop/            north-pacific-gyre/ writing/
 
 `-a` stands for "show all";
 it forces `ls` to show us file and directory names that begin with `.`,
-such as `..` (which, if we're in `/Users/nelle`, refers to the `/Users` directory)
+such as `..` (which, if we're in `/Users/mesfind`, refers to the `/Users` directory)
 As you can see,
 it also displays another special directory that's just called `.`,
 which means "the current working directory".
@@ -750,8 +752,8 @@ equivalent to `ls -Fa`.
 > The special names `.` and `..` don't belong to `cd`;
 > they are interpreted the same way by every program.
 > For example,
-> if we are in `/Users/nelle/data`,
-> the command `ls ..` will give us a listing of `/Users/nelle`.
+> if we are in `/Users/mesfind/data`,
+> the command `ls ..` will give us a listing of `/Users/mesfind`.
 > When the meanings of the parts are the same no matter how they're combined,
 > programmers say they are **orthogonal**:
 > Orthogonal systems tend to be easier for people to learn
@@ -776,7 +778,7 @@ How can you check what happened?  `pwd` gives us the answer!
 {: .bash}
 
 ~~~
-/Users/nelle
+/Users/mesfind
 ~~~
 {: .output}
 
@@ -825,7 +827,7 @@ to move to `data-shell`.
 {: .output}
 
 ~~~
-[remote]$ cd /Users/nelle/Desktop/data-shell
+[remote]$ cd /Users/mesfind/Desktop/data-shell
 ~~~
 {: .bash}
 
@@ -835,9 +837,9 @@ Run `pwd` and `ls -F` to ensure that we're in the directory we expect.
 >
 > The shell interprets the character `~` (tilde) at the start of a path to
 > mean "the current user's home directory". For example, if Nelle's home
-> directory is `/Users/nelle`, then `~/data` is equivalent to
-> `/Users/nelle/data`. This only works if it is the first character in the
-> path: `here/there/~/elsewhere` is *not* `here/there/Users/nelle/elsewhere`.
+> directory is `/Users/mesfind`, then `~/data` is equivalent to
+> `/Users/mesfind/data`. This only works if it is the first character in the
+> path: `here/there/~/elsewhere` is *not* `here/there/Users/mesfind/elsewhere`.
 >
 > Another shortcut is the `-` (dash) character.  `cd` will translate `-` into
 > *the previous directory I was in*, which is faster than having to remember,
