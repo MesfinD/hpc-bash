@@ -22,7 +22,7 @@ How do we ensure that a task is run with the resources it needs?
 This job is handled by a special piece of software called the scheduler.
 On an HPC system, the scheduler manages which jobs run where and when.
 
-The scheduler used in this lesson is SLURM.
+The scheduler used in this lesson is TORQUE(there is also SLURM scheduler).
 Although SLURM is not used everywhere, 
 running jobs is quite similar regardless of what software is being used.
 The exact syntax might change, but the concepts remain the same.
@@ -51,10 +51,10 @@ Let's create a demo shell script to run as a test.
 If you completed the previous challenge successfully, 
 you probably realize that there is a distinction between 
 running the job through the scheduler and just "running it".
-To submit this job to the scheduler, we use the `sbatch` command.
+To submit this job to the scheduler, we use the `qsub` command.
 
 ```
-sbatch example-job.sh
+qsub example-job.sh
 ```
 {: .bash}
 ```
@@ -79,15 +79,15 @@ S
 
 We can see all the details of our job, most importantly that it is in the "R" or "RUNNING" state.
 Sometimes our jobs might need to wait in a queue ("PENDING") or have an error.
-The best way to check our job's status is with `squeue`.
-Of course, running `squeue` repeatedly to check on things can be a little tiresome.
+The best way to check our job's status is with `qsub`.
+Of course, running `qsub` repeatedly to check on things can be a little tiresome.
 To see a real-time view of our jobs, we can use the `watch` command.
 `watch` reruns a given command at 2-second intervals. 
 Let's try using it to monitor another job.
 
 ```
-sbatch example-job.sh
-watch squeue -u yourUsername
+qsub example-job.sh
+watch qstat -u yourUsername
 ```
 {: .bash}
 
@@ -108,21 +108,21 @@ Comments in UNIX (denoted by `#`) are typically ignored.
 But there are exceptions.
 For instance the special `#!` comment at the beginning of scripts
 specifies what program should be used to run it (typically `/bin/bash`).
-Schedulers like SLURM also have a special comment used to denote special 
+Schedulers like TORQUE also have a special comment used to denote special 
 scheduler-specific options.
 Though these comments differ from scheduler to scheduler, 
-SLURM's special comment is `#SBATCH`.
-Anything following the `#SBATCH` comment is interpreted as an instruction to the scheduler.
+TORQUE's special comment is `#qsub`.
+Anything following the `#qsub` comment is interpreted as an instruction to the scheduler.
 
 Let's illustrate this by example. 
 By default, a job's name is the name of the script,
 but the `-J` option can be used to change the name of a job.
 
-Submit the following job (`sbatch example-job.sh`):
+Submit the following job (`qsub example-job.sh`):
 
 ```
 #!/bin/bash
-#SBATCH -J new_name
+#PBS -J new_name
 
 echo 'This script is running on:'
 hostname
@@ -130,7 +130,7 @@ sleep 120
 ```
 
 ```
-squeue -u yourUsername
+qstat -u yourUsername
 ```
 {: .bash}
 ```
@@ -145,9 +145,9 @@ Fantastic, we've successfully changed the name of our job!
 > 
 > Jobs on an HPC system might run for days or even weeks.
 > We probably have better things to do than constantly check on the status of our job
-> with `squeue`.
-> Looking at the [online documentation for `sbatch`](https://slurm.schedmd.com/sbatch.html)
-> (you can also google "sbatch slurm"),
+> with `qstat`.
+> Looking at the [online documentation for `qsub`](http://docs.adaptivecomputing.com/torque/4-0-2/Content/topics/commands/qsub.htm)
+> (you can also google "qsub torque"),
 > can you set up our test job to send you an email when it finishes?
 > 
 > Hint: you will need to use the `--mail-user` and `--mail-type` options.
@@ -180,8 +180,8 @@ The following are several key resource requests:
 >
 > When SLURM runs a job, it sets a number of environment variables for the job.
 > One of these will let us check our work from the last problem.
-> The `SLURM_CPUS_PER_TASK` variable is set to the number of CPUs we requested with `-c`.
-> Using the `SLURM_CPUS_PER_TASK` variable, 
+> The `TORQUE_CPUS_PER_TASK` variable is set to the number of CPUs we requested with `-c`.
+> Using the `TORQUE_CPUS_PER_TASK` variable, 
 > modify your job so that it prints how many CPUs have been allocated.
 {: .challenge}
 
@@ -193,7 +193,7 @@ and attempt to run a job for two minutes.
 
 ```
 #!/bin/bash
-#SBATCH -t 0:0:30
+#PBS -t 0:0:30
 
 echo 'This script is running on:'
 hostname
@@ -203,15 +203,15 @@ sleep 120
 Submit the job and wait for it to finish. 
 Once it is has finished, check the log file.
 ```
-sbatch example-job.sh
-watch squeue -u yourUsername
-cat slurm-38193.out
+qsub example-job.sh
+watch qstat -u yourUsername
+cat gpaw-job.out
 ```
 {: .bash}
 ```
 This job is running on:
-gra533
-slurmstepd: error: *** JOB 38193 ON gra533 CANCELLED AT 2017-07-02T16:35:48 DUE TO TIME LIMIT ***
+Nodo4
+torquestepd: error: *** JOB 38193 ON Nodo4 CANCELLED AT 2017-07-02T16:35:48 DUE TO TIME LIMIT ***
 ```
 {: .output}
 
@@ -230,12 +230,12 @@ the only jobs affected by a mistake in scheduling will be their own.
 ## Canceling a job
 
 Sometimes we'll make a mistake and need to cancel a job.
-This can be done with the `scancel` command.
+This can be done with the `qdel` command.
 Let's submit a job and then cancel it using its job number.
 
 ```
-sbatch example-job.sh
-squeue -u yourUsername
+qsub example-job.sh
+qstat -u yourUsername
 ```
 {: .bash}
 ```
@@ -250,8 +250,8 @@ Now cancel the job with it's job number.
 Absence of any job info indicates that the job has been successfully canceled.
 
 ```
-scancel 38759
-squeue -u yourUsername
+qdel 38759
+qstat -u yourUsername
 ```
 {: .bash}
 ```
@@ -266,42 +266,42 @@ squeue -u yourUsername
 > Note that you can only delete your own jobs.
 >
 > Try submitting multiple jobs and then cancelling them all with 
-> `scancel -u yourUsername`.
+> `qdel -u yourUsername`.
 {: .challenge}
 
 ## Other types of jobs
 
 Up to this point, we've focused on running jobs in batch mode.
-SLURM also provides the ability to run tasks as a one-off or start an interactive session.
+TORQUE also provides the ability to run tasks as a one-off or start an interactive session.
 
 There are very frequently tasks that need to be done semi-interactively.
 Creating an entire job script might be overkill, 
 but the amount of resources required is too much for a login node to handle.
 A good example of this might be building a genome index for alignment with a tool like [HISAT2](https://ccb.jhu.edu/software/hisat2/index.shtml).
-Fortunately, we can run these types of tasks as a one-off with `srun`.
+Fortunately, we can run these types of tasks as a one-off with `qrun`.
 
-`srun` runs a single command on the cluster and then exits.
-Let's demonstrate this by running the `hostname` command with `srun`.
-(We can cancel an `srun` job with `Ctrl-c`.)
+`qrun` runs a single command on the cluster and then exits.
+Let's demonstrate this by running the `hostname` command with `qrun`.
+(We can cancel an `qrun` job with `Ctrl-c`.)
 
 ```
-srun hostname
+qrun hostname
 ```
 {: .bash}
 ```
-gra752
+Nodo5
 ```
 {: .output}
 
-`srun` accepts all of the same options as `sbatch`.
+`qrun` accepts all of the same options as `qsub`.
 However, instead of specifying these in a script, 
 these options are specified on the command-line when starting a job.
 To submit a job that uses 2 cpus for instance, 
 we could use the following command
-(note that SLURM's environment variables like `SLURM_CPUS_PER_TASK` are only available to batch jobs run with `sbatch`):
+(note that Torque's environment variables like `TORQUE_CPUS_PER_TASK` are only available to batch jobs run with `qsub`):
 
 ```
-srun -c 2 echo "This job will use 2 cpus."
+qrun -c 2 echo "This job will use 2 cpus."
 ```
 {: .bash}
 ```
@@ -314,10 +314,10 @@ This job will use 2 cpus.
 Sometimes, you will need a lot of resource for interactive use.
 Perhaps it's the first time running an analysis 
 or we are attempting to debug something that went wrong with a previous job.
-Fortunately, SLURM makes it easy to start an interactive job with `srun`:
+Fortunately, TORQUE makes it easy to start an interactive job with `qrun`:
 
 ```
-srun --x11 --pty bash
+qrun --x11 --pty bash
 ```
 {: .bash}
 
@@ -341,7 +341,7 @@ You can also verify this with `hostname`.
 > A relatively adorable pair of eyes should pop up (press `Ctrl-c` to stop).
 >
 > Note that this command requires you to have connected with X-forwarding enabled
-> (`ssh -X username@host.address.ca`).
+> (`ssh -X username@10.4.17.30`).
 {: .challenge}
 
 When you are done with the interactive job, type `exit` to quit your session.
