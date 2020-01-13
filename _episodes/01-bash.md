@@ -140,8 +140,8 @@ i.e.,
 the directory that the computer assumes we want to run commands in
 unless we explicitly specify something else.
 Here,
-the computer's response is `/Users/mesfind`,
-which is Nelle's **home directory**:
+the computer's response is `/User/mesfind`,
+which is Mesfin's **home directory**:
 
 ~~~
 $ pwd
@@ -149,14 +149,14 @@ $ pwd
 {: .bash}
 
 ~~~
-/Users/mesfind
+//mesfind
 ~~~
 {: .output}
 
 > ## Home Directory Variation
 >
 > The home directory path will look different on different operating systems.
-> On Linux it may look like `/home/nelle`,
+> On Linux it may look like `/home/mesfind`,
 > and on Windows it will be similar to `C:\Documents and Settings\mesfind` or
 > `C:\Users\mesfind`.  
 > (Note that it may look slightly different for different versions of Windows.)
@@ -224,14 +224,14 @@ As part of going further with exploring the Bash Shell we'll move to connecting 
 Unlike the commands that we have issued so far `ssh` requires both the command (`ssh`) *and* and an input.  The input in this case is the location of the remote system that we are looking to connect to.  This input is passed to the `ssh` command by placing one or more spaces *after* the `ssh` command and then typing in the address for the remote system either in alpha-numeric format, like most web addresses, or by giving an IP address.  If the name of the remote system was `cedar.computecanada.ca` then the full command would look like the following:
 
 ~~~
-$ ssh username@10.4.17.30
+$ ssh username@hpc.ethernet.edu.et
 ~~~
 {: .bash}
 
-If this was the first time we had ever connected to `10.4.17.30	` then we will see a note declaring that our computer has no way to know that this is the system that we want to connect to and it will ask us if we are sure about connecting.
+If this was the first time we had ever connected to `hpc.ethernet.edu.et` then we will see a note declaring that our computer has no way to know that this is the system that we want to connect to and it will ask us if we are sure about connecting.
 
 ~~~
-The authenticity of host 'Ntoto (10.4.17.30)' can't be established.
+The authenticity of host 'hpc.ethernet.edu.et' can't be established.
 ECDSA key fingerprint is SHA256:JRj286Pkqh6aeO5zx1QUkS8un5fpcapmezusceSGhok.
 Are you sure you want to continue connecting (yes/no)?
 ~~~
@@ -271,9 +271,9 @@ Password123
 Centos release 6.3(Final)
 HPC Sie Ladon centos 6 Multinodo Nis Version 092012
 #######################################################
-# WELCOME TO CLUSTERSIE HPC LADON                     #
+# WELCOME TO ETHERNET                                 #
 #     CLUSTER ADDIS ABABA                             #
-#     www.clustersie.com                              #
+#                                                      #
 #######################################################
 Email mesfin.diro@aau.edu.et for assistance.
 
