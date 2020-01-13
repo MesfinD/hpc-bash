@@ -63,10 +63,10 @@ Submitted batch job 36855
 {: .output}
 
 And that's all we need to do to submit a job. 
-To check on our job's status, we use the command `squeue`.
+To check on our job's status, we use the command `sstat`.
 
 ```
-squeue -u yourUsername
+sstat -u yourUsername
 ```
 {: .bash}
 ```
@@ -87,7 +87,7 @@ Let's try using it to monitor another job.
 
 ```
 sbatch example-job.sh
-watch squeue -u yourUsername
+watch sstat -u yourUsername
 ```
 {: .bash}
 
@@ -130,7 +130,7 @@ srun sleep 120
 ```
 
 ```
-squeue -u yourUsername
+sstat -u yourUsername
 ```
 {: .bash}
 ```
@@ -147,7 +147,7 @@ Fantastic, we've successfully changed the name of our job!
 > We probably have better things to do than constantly check on the status of our job
 > with `sbatch`.
 > Looking at the [online documentation for `sbatch`](https://slurm.schedmd.com/quickstart.html)
-> (you can also google "qsub torque"),
+> (you can also google "sbatch slurm"),
 > can you set up our test job to send you an email when it finishes?
 > 
 > Hint: you will need to use the `--mail-user` and `--mail-type` options.
@@ -203,15 +203,15 @@ srun sleep 120
 Submit the job and wait for it to finish. 
 Once it is has finished, check the log file.
 ```
-sbatch  example-job.sh
-watch squeue -u yourUsername
-cat gpaw-job.out
+$sbatch  example-job.sh
+$watch sstat -u yourUsername
+$cat gpaw-job.out
 ```
 {: .bash}
 ```
 This job is running on:
 compute1
-torquestepd: error: *** JOB 38193 ON Nodo4 CANCELLED AT 2017-07-02T16:35:48 DUE TO TIME LIMIT ***
+slurmstepd: error: *** JOB 38193 ON Nodo4 CANCELLED AT 2017-07-02T16:35:48 DUE TO TIME LIMIT ***
 ```
 {: .output}
 
@@ -235,7 +235,7 @@ Let's submit a job and then cancel it using its job number.
 
 ```
 sbatch example-job.sh
-squeue -u yourUsername
+sstat -u yourUsername
 ```
 {: .bash}
 ```
@@ -251,7 +251,7 @@ Absence of any job info indicates that the job has been successfully canceled.
 
 ```
 scancel 38759
-squeue -u yourUsername
+sstat -u yourUsername
 ```
 {: .bash}
 ```
@@ -272,7 +272,7 @@ squeue -u yourUsername
 ## Other types of jobs
 
 Up to this point, we've focused on running jobs in batch mode.
-TORQUE also provides the ability to run tasks as a one-off or start an interactive session.
+Slurm also provides the ability to run tasks as a one-off or start an interactive session.
 
 There are very frequently tasks that need to be done semi-interactively.
 Creating an entire job script might be overkill, 
@@ -280,7 +280,7 @@ but the amount of resources required is too much for a login node to handle.
 A good example of this might be building a genome index for alignment with a tool like [HISAT2](https://ccb.jhu.edu/software/hisat2/index.shtml).
 Fortunately, we can run these types of tasks as a one-off with `srun`.
 
-`qrun` runs a single command on the cluster and then exits.
+`srun` runs a single command on the cluster and then exits.
 Let's demonstrate this by running the `hostname` command with `srun`.
 (We can cancel an `srun` job with `Ctrl-c`.)
 
@@ -289,7 +289,7 @@ srun hostname
 ```
 {: .bash}
 ```
-Nodo5
+mgmt01
 ```
 {: .output}
 
@@ -314,7 +314,7 @@ This job will use 2 cpus.
 Sometimes, you will need a lot of resource for interactive use.
 Perhaps it's the first time running an analysis 
 or we are attempting to debug something that went wrong with a previous job.
-Fortunately, TORQUE makes it easy to start an interactive job with `qrun`:
+Fortunately, Slurm makes it easy to start an interactive job with `srun`:
 
 ```
 srun --x11 --pty bash
