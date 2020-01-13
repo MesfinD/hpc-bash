@@ -79,15 +79,15 @@ S
 
 We can see all the details of our job, most importantly that it is in the "R" or "RUNNING" state.
 Sometimes our jobs might need to wait in a queue ("PENDING") or have an error.
-The best way to check our job's status is with `qsub`.
-Of course, running `qsub` repeatedly to check on things can be a little tiresome.
+The best way to check our job's status is with `sbatch`.
+Of course, running `sbatch` repeatedly to check on things can be a little tiresome.
 To see a real-time view of our jobs, we can use the `watch` command.
 `watch` reruns a given command at 2-second intervals. 
 Let's try using it to monitor another job.
 
 ```
 sbatch example-job.sh
-watch qstat -u yourUsername
+watch squeue -u yourUsername
 ```
 {: .bash}
 
@@ -111,14 +111,14 @@ specifies what program should be used to run it (typically `/bin/bash`).
 Schedulers like TORQUE also have a special comment used to denote special 
 scheduler-specific options.
 Though these comments differ from scheduler to scheduler, 
-TORQUE's special comment is `#qsub`.
-Anything following the `#qsub` comment is interpreted as an instruction to the scheduler.
+Slurm's special comment is `#sbatch`.
+Anything following the `#sbatch` comment is interpreted as an instruction to the scheduler.
 
 Let's illustrate this by example. 
 By default, a job's name is the name of the script,
 but the `-J` option can be used to change the name of a job.
 
-Submit the following job (`qsub example-job.sh`):
+Submit the following job (`sbatch example-job.sh`):
 
 ```
 #!/bin/bash
@@ -145,7 +145,7 @@ Fantastic, we've successfully changed the name of our job!
 > 
 > Jobs on an HPC system might run for days or even weeks.
 > We probably have better things to do than constantly check on the status of our job
-> with `qstat`.
+> with `sbatch`.
 > Looking at the [online documentation for `sbatch`](https://slurm.schedmd.com/quickstart.html)
 > (you can also google "qsub torque"),
 > can you set up our test job to send you an email when it finishes?
