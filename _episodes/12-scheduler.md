@@ -146,7 +146,7 @@ Fantastic, we've successfully changed the name of our job!
 > Jobs on an HPC system might run for days or even weeks.
 > We probably have better things to do than constantly check on the status of our job
 > with `qstat`.
-> Looking at the [online documentation for `sbatch`](https://support.ceci-hpc.be/doc/_contents/QuickStart/SubmittingJobs/SlurmTutorial.html)
+> Looking at the [online documentation for `sbatch`](https://slurm.schedmd.com/quickstart.html)
 > (you can also google "qsub torque"),
 > can you set up our test job to send you an email when it finishes?
 > 
