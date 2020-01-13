@@ -43,18 +43,18 @@ Let's create a demo shell script to run as a test.
 >#!/bin/bash
 >
 > echo 'This script is running on:'
-> hostname
-> sleep 120
+> srun hostname
+> srun sleep 120
 >```
 {: .challenge}
 
 If you completed the previous challenge successfully, 
 you probably realize that there is a distinction between 
 running the job through the scheduler and just "running it".
-To submit this job to the scheduler, we use the `qsub` command.
+To submit this job to the scheduler, we use the `sbatch` command.
 
 ```
-qsub example-job.sh
+sbatch example-job.sh
 ```
 {: .bash}
 ```
@@ -86,7 +86,7 @@ To see a real-time view of our jobs, we can use the `watch` command.
 Let's try using it to monitor another job.
 
 ```
-qsub example-job.sh
+sbatch example-job.sh
 watch qstat -u yourUsername
 ```
 {: .bash}
@@ -122,15 +122,15 @@ Submit the following job (`qsub example-job.sh`):
 
 ```
 #!/bin/bash
-#PBS -J new_name
+#SBATCH --job-name new_name
 
 echo 'This script is running on:'
-hostname
-sleep 120
+srun hostname
+srun sleep 120
 ```
 
 ```
-qstat -u yourUsername
+squeue -u yourUsername
 ```
 {: .bash}
 ```
@@ -146,7 +146,7 @@ Fantastic, we've successfully changed the name of our job!
 > Jobs on an HPC system might run for days or even weeks.
 > We probably have better things to do than constantly check on the status of our job
 > with `qstat`.
-> Looking at the [online documentation for `qsub`](http://docs.adaptivecomputing.com/torque/4-0-2/Content/topics/commands/qsub.htm)
+> Looking at the [online documentation for `sbatch`](https://support.ceci-hpc.be/doc/_contents/QuickStart/SubmittingJobs/SlurmTutorial.html)
 > (you can also google "qsub torque"),
 > can you set up our test job to send you an email when it finishes?
 > 
@@ -193,24 +193,24 @@ and attempt to run a job for two minutes.
 
 ```
 #!/bin/bash
-#PBS -t 0:0:30
+#SBATCH -t 0:0:30
 
 echo 'This script is running on:'
-hostname
-sleep 120
+srun hostname
+srun sleep 120
 ```
 
 Submit the job and wait for it to finish. 
 Once it is has finished, check the log file.
 ```
-qsub example-job.sh
-watch qstat -u yourUsername
+sbatch  example-job.sh
+watch squeue -u yourUsername
 cat gpaw-job.out
 ```
 {: .bash}
 ```
 This job is running on:
-Nodo4
+compute1
 torquestepd: error: *** JOB 38193 ON Nodo4 CANCELLED AT 2017-07-02T16:35:48 DUE TO TIME LIMIT ***
 ```
 {: .output}
@@ -230,12 +230,12 @@ the only jobs affected by a mistake in scheduling will be their own.
 ## Canceling a job
 
 Sometimes we'll make a mistake and need to cancel a job.
-This can be done with the `qdel` command.
+This can be done with the `scancel` command.
 Let's submit a job and then cancel it using its job number.
 
 ```
-qsub example-job.sh
-qstat -u yourUsername
+sbatch example-job.sh
+squeue -u yourUsername
 ```
 {: .bash}
 ```
@@ -250,8 +250,8 @@ Now cancel the job with it's job number.
 Absence of any job info indicates that the job has been successfully canceled.
 
 ```
-qdel 38759
-qstat -u yourUsername
+scancel 38759
+squeue -u yourUsername
 ```
 {: .bash}
 ```
@@ -266,7 +266,7 @@ qstat -u yourUsername
 > Note that you can only delete your own jobs.
 >
 > Try submitting multiple jobs and then cancelling them all with 
-> `qdel -u yourUsername`.
+> `scancel -u yourUsername`.
 {: .challenge}
 
 ## Other types of jobs
@@ -278,14 +278,14 @@ There are very frequently tasks that need to be done semi-interactively.
 Creating an entire job script might be overkill, 
 but the amount of resources required is too much for a login node to handle.
 A good example of this might be building a genome index for alignment with a tool like [HISAT2](https://ccb.jhu.edu/software/hisat2/index.shtml).
-Fortunately, we can run these types of tasks as a one-off with `qrun`.
+Fortunately, we can run these types of tasks as a one-off with `srun`.
 
 `qrun` runs a single command on the cluster and then exits.
-Let's demonstrate this by running the `hostname` command with `qrun`.
-(We can cancel an `qrun` job with `Ctrl-c`.)
+Let's demonstrate this by running the `hostname` command with `srun`.
+(We can cancel an `srun` job with `Ctrl-c`.)
 
 ```
-qrun hostname
+srun hostname
 ```
 {: .bash}
 ```
@@ -293,15 +293,15 @@ Nodo5
 ```
 {: .output}
 
-`qrun` accepts all of the same options as `qsub`.
+`srun` accepts all of the same options as `sbatch`.
 However, instead of specifying these in a script, 
 these options are specified on the command-line when starting a job.
 To submit a job that uses 2 cpus for instance, 
 we could use the following command
-(note that Torque's environment variables like `TORQUE_CPUS_PER_TASK` are only available to batch jobs run with `qsub`):
+(note that Torque's environment variables like `TORQUE_CPUS_PER_TASK` are only available to batch jobs run with `sbatch`):
 
 ```
-qrun -c 2 echo "This job will use 2 cpus."
+srun -c 2 echo "This job will use 2 cpus."
 ```
 {: .bash}
 ```
@@ -317,7 +317,7 @@ or we are attempting to debug something that went wrong with a previous job.
 Fortunately, TORQUE makes it easy to start an interactive job with `qrun`:
 
 ```
-qrun --x11 --pty bash
+srun --x11 --pty bash
 ```
 {: .bash}
 
@@ -341,7 +341,7 @@ You can also verify this with `hostname`.
 > A relatively adorable pair of eyes should pop up (press `Ctrl-c` to stop).
 >
 > Note that this command requires you to have connected with X-forwarding enabled
-> (`ssh -X username@10.4.17.30`).
+> (`ssh -X username@hpc.ethernet.edu.et`).
 {: .challenge}
 
 When you are done with the interactive job, type `exit` to quit your session.
